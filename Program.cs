@@ -1,4 +1,20 @@
+using Fiesta_Flavors.Data;
+using Fiesta_Flavors.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+
 var builder = WebApplication.CreateBuilder(args);
+
+//Get connection string from appsettings.json
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
+     throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+//Add DbContext with the connection string
+builder.Services.AddDbContext<MyAppDbContext>(options => options.UseSqlServer(connectionString));
+
+//Add Identity services (if needed)
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<MyAppDbContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
