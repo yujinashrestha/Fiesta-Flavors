@@ -1,4 +1,5 @@
 ﻿using Fiesta_Flavors.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,7 +22,35 @@ namespace Fiesta_Flavors.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<ProductIngredient>()
+            
+
+            // Prevent EF from modifying Identity tables
+           builder.Entity<IdentityUserToken<string>>(b =>
+            {
+                b.Property(ut => ut.LoginProvider).HasMaxLength(450);
+                b.Property(ut => ut.Name).HasMaxLength(450);
+            });
+
+            builder.Entity<IdentityUserLogin<string>>(b =>
+            {
+                b.Property(ul => ul.LoginProvider).HasMaxLength(450);
+                b.Property(ul => ul.ProviderKey).HasMaxLength(450);
+            });
+
+            // Your decimal configurations here too:
+            builder.Entity<Order>()
+                .Property(o => o.TotalAmount)
+                .HasColumnType("decimal(18,2)");
+
+            builder.Entity<OrderItem>()
+                .Property(oi => oi.Price)
+                .HasColumnType("decimal(18,2)");
+
+            builder.Entity<Product>()
+                .Property(p => p.Price)
+                .HasColumnType("decimal(18,2)");
+        
+        builder.Entity<ProductIngredient>()
                 .HasKey(pi => new { pi.ProductId, pi.IngredientId });
 
             builder.Entity<ProductIngredient>()
