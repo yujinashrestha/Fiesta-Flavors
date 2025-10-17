@@ -13,9 +13,24 @@ namespace Fiesta_Flavors.Controllers
         {
             ingredients = new Repository<Ingredient>(context);
         }
+
         public async Task<IActionResult> Index()
         {
             return View(await ingredients.GetAllAsync());
         }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            return View(await ingredients.GetIdAsync(id, new QueryOptions<Ingredient>() { Includes = "ProductIngredients.Product" }));
+        }
+
+        //Ingredient/Create
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
     }
 }
+

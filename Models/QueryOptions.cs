@@ -9,10 +9,10 @@ namespace Fiesta_Flavors.Models
         private string[] includes=Array.Empty<string>();
         public string Includes
         {
-            set => includes = value.Replace("", "").Split(',');
+            set => includes = string.IsNullOrWhiteSpace(value)? Array.Empty<string>() :value.Replace(" ", "").Split(',', StringSplitOptions.RemoveEmptyEntries);
         }
 
-        public string[] GetIncludes() => includes;
+        public string[] GetIncludes() => includes ?? Array.Empty<string>();
         public bool HasWhere => Where != null;
         public bool HasOrderBy => OrderBy != null;
 
