@@ -20,9 +20,15 @@ namespace Fiesta_Flavors.Models
             await _context.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            T? entity = await dbSet.FindAsync(id);  // Add ? to make nullable
+
+            if (entity != null)  // Check for null before removing
+            {
+                dbSet.Remove(entity);
+                await _context.SaveChangesAsync();
+            }
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()
