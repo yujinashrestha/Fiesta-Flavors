@@ -77,5 +77,28 @@ namespace Fiesta_Flavors.Controllers
             await ingredients.DeleteAsync(id);  // Fixed: Call repository's DeleteAsync, not entity's
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var ingredient = await ingredients.GetIdAsync(id, new QueryOptions<Ingredient> { Includes="ProductIngredients.Product"});
+            if (ingredient == null)
+            {
+                return NotFound();
+            }
+            return View(ingredient);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit([Bind("IngredientId, Name")] Ingredient ingredient)
+        {
+            if (ModelState.IsValid)
+            {
+                await ingredients.UpdateAsync(ingredient);
+                return RedirectToAction("Index");
+            }
+            return View(ingredient);
+        }
     }
 }

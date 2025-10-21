@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewBag.Title = "Tequila's Menu Items";
+}
+
+<div class="container py-5">
+    <h2 class="mb-4">Tequila's Menu Items</h2>
+    <a asp-action="AddEdit" asp-controller="Product" class="btn btn-primary">Create New Item</a>
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <form asp-action="delete" asp-controller="product" method="post">
+                    <input type="hidden" name="id" value="@product.ProductId" />
+                <div class="card">
+                    <img src="@Url.Content("~/images/" + product?.ImageUrl)"  class="card-img-top fixed-img-height" alt="@product.Name">
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name</h5>
+                        <p class="text-muted small">@product.Category?.Name</p>
+                        <p class="card-text">@product.Description</p>
+                        <p class="fw-bold fs-5">$@product.Price</p>
+                        <p class="text-muted small">Stock: @product.Stock</p>
+                        <button class="btn btn-primary w-100">Add to Cart</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,36 @@
+﻿@model Product
+@{
+    ViewBag.Title = $"{ViewBag.Operation} Menu Item";
+}
+
+<h2>@ViewBag.Operation Menu Item</h2>
+
+<form action="AddEdit" method="post" enctype="multipart/form-data">
+<input type="hidden" asp-for="ProductId" />
+    <input type="hidden" asp-for="CategoryId" />
+    <div class="form-group?">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" name="Name"/>
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group?">
+        <label asp-for="Description"></label>
+        <input asp-for="Description" class="form-control" name="Description" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group?">
+        <label asp-for="Price"></label>
+        <input asp-for="Price" class="form-control" name="Price" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div class="form-group?">
+        <label asp-for="Stock"></label>
+        <input asp-for="Stock" class="form-control" name="Stock" />
+        <span asp-validation-for="Stock" class="text-danger"></span>
+    </div>
+    <div class="form-group?">
+        <label for="ImageUpload">Upload Image</label>
+        <input type="file" class="form-control" name="ImageFile" id="ImageUpload" asp-for="ImageFile" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+</form>
