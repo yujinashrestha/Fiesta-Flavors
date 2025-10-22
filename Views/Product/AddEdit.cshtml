@@ -33,4 +33,31 @@
         <input type="file" class="form-control" name="ImageFile" id="ImageUpload" asp-for="ImageFile" />
         <span asp-validation-for="Price" class="text-danger"></span>
     </div>
+    <div class="row">
+        <div class="col">
+            @foreach (Category category in ViewBag.Categories)
+                {
+                    <div class="form-check">@{
+                            bool isChecked = Model.CategoryId == category.CategoryId;
+                        }
+                        <input type="radio" class="form-check-input" id="@category.CategoryId" name="catId" value="@category.CategoryId" @(isChecked?"checked":"")
+/>@category.Name
+                    </div>
+                }
+            </div>
+    
+    
+        <div class="col">
+                @foreach (Ingredient ingredient in ViewBag.Ingredients)
+                {
+                <div class="form-check">@{
+                        bool isChecked = Model.ProductIngredients !=null &&  ingredient.ProductIngredients.Any(i=> i.IngredientId==ingredient.IngredientId);}
+                        <input type="checkbox" class="form-check-input" id="ingredientIds" value="@ingredient.IngredientId" @(isChecked?"checked":"")/>
+                        <label class="form-check-label" for="@ingredient.IngredientId">@ingredient.Name</label>
+                        </div>
+                }
+            </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
 </form>

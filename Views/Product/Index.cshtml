@@ -20,7 +20,8 @@
                         <p class="card-text">@product.Description</p>
                         <p class="fw-bold fs-5">$@product.Price</p>
                         <p class="text-muted small">Stock: @product.Stock</p>
-                        <button class="btn btn-primary w-100">Add to Cart</button>
+                        <a class="btn btn-info" asp-controller="Product" asp-action="AddEdit" asp-route-id="@product.ProductId"><i class="bi bi-pencil-fill">Edit</i></a>
+=""                        <button class="btn btn-primary w-100">Add to Cart</button>
                     </div>
                 </div>
                 </form>
