@@ -1,23 +1,24 @@
 ﻿@model OrderViewModel
-
 @{
     ViewBag.Title = "Create Order";
 }
- <div class="row">
-        @foreach (Product product in Model.Products)
-        {
-            <div class="col-md-4 mb-4">
-                <form asp-action="AddItem" asp-controller="Order" method="post">
-                    <input type="hidden" name="id" value="@product.ProductId" />
-                <div class="card">
-                    <img src="@Url.Content("~/images/" + product?.ImageUrl)"  class="card-img-top fixed-img-height" alt="@product.Name">
+
+<div class="row">
+    @foreach (Product product in Model.Products)
+    {
+        <div class="col-md-4 mb-4">
+            <form asp-action="AddItem" asp-controller="Order" method="post">
+                <div class="card" style="width:18rem;">
+                    <img src="@Url.Content("~/images/" + product?.ImageUrl)" class="card-img-top fixed-img-height" alt="@product.Name">
                     <div class="card-body">
-                       @product.Name -@product.Price.ToString("C")
-                       <input type="hidden" value="@product.ProductId" name="prodId"/>
-                        <input type="number" value="@product.ProductId" name="prodQty" class="form-control" />
-                        <button class="btn btn-info" type="submit"> Add</button>
-                        </div>
+                       @product.Name-@product.Price.ToString("C")
+
+                        <input type="hidden" value="@product.ProductId" name="prodId" />
+                        <input type="number" name="prodQty" class="form-control mb-2" placeholder="Quantity" />
+                        <button class="btn btn-info" type="submit">Add to Cart</button>
+                    </div>
                 </div>
-                </form>
+            </form>
         </div>
-        </div>
+    }
+</div>
